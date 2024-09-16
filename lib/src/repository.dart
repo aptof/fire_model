@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_model/fire_model.dart';
-import 'package:fire_model/src/model_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 

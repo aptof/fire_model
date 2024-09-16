@@ -2,14 +2,16 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+/// Put AuthService, Firebase Firestore and Firebase Auth
+/// before `runApp()` using `Get.put()`
 class AuthService extends GetxService {
   final user = Rxn<User>(null);
   final _auth = Get.find<FirebaseAuth>();
-  StreamSubscription? subscription;
+  StreamSubscription? _subscription;
 
   @override
   void onInit() {
-    subscription = _auth.authStateChanges().listen((User? user) {
+    _subscription = _auth.authStateChanges().listen((User? user) {
       this.user.value = user;
     });
     super.onInit();
@@ -28,7 +30,7 @@ class AuthService extends GetxService {
 
   @override
   void onClose() {
-    subscription?.cancel();
+    _subscription?.cancel();
     super.onClose();
   }
 }
