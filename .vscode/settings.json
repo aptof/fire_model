@@ -1,0 +1,15 @@
+{
+  "cSpell.words": [
+    "Firestore",
+    "Getx",
+    "mocktail"
+  ],
+  "filewatcher.commands": [
+    {
+      "match": "\\.dart",
+      "isAsync": true,
+      "cmd": "cd /D D:\\codes\\fire_model && flutter test test/repository_test.dart",
+      "event": "onFileChange",
+    }
+  ],
+}
