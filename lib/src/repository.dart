@@ -121,10 +121,12 @@ abstract class Repository<T extends Model> extends GetxController {
     return response.docs.map((doc) => doc.data()).toList();
   }
 
+  /// Saves a model to database
   Future<void> save(T model) async {
     await collectionReference().doc(model.id).set(model);
   }
 
+  /// Update a already saved model
   Future<void> saveUpdated(T model) async {
     await collectionReference()
         .doc(model.id)
@@ -138,31 +140,39 @@ abstract class Repository<T extends Model> extends GetxController {
   /// > _`@returns: [T]`_
   WriteBatch batch() => db.batch();
 
+  /// Call when required batch operation
+  /// Don't forgot to call commit on batch
   Future<void> batchSave(T model, WriteBatch batch) async {
     final ref = docRef(model);
     batch.set(ref, model);
   }
 
+  /// Call when required batch operation
+  /// Don't forgot to call commit on batch
   Future<void> batchUpdate(T model, WriteBatch batch) async {
     final ref = docRef(model);
     batch.set(ref, model, SetOptions(merge: true));
   }
 
+  /// ## Not for consumer to use directly.
+  DocumentReference<T> docRef(T model) {
+    return collectionReference().doc(model.id);
+  }
+
+  /// ## Not for consumer to use directly.
   T fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   );
 
+  /// ## Not for consumer to use directly.
   Map<String, dynamic> toFirestore(T model);
 
+  /// ## Not for consumer to use directly.
   CollectionReference<T> collectionReference() {
     return db.collection(collection).withConverter(
           fromFirestore: fromFirestore,
           toFirestore: (T model, _) => toFirestore(model),
         );
-  }
-
-  DocumentReference<T> docRef(T model) {
-    return collectionReference().doc(model.id);
   }
 }
