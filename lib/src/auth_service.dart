@@ -9,6 +9,8 @@ class AuthService extends GetxService {
   final _auth = Get.find<FirebaseAuth>();
   StreamSubscription? _subscription;
 
+  bool get isLoggedIn => user.value != null;
+
   @override
   void onInit() {
     _subscription = _auth.authStateChanges().listen((User? user) {
